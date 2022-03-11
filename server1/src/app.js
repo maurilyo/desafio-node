@@ -12,19 +12,6 @@ const mysql = require('mysql')
 const connection = mysql.createConnection(config)
 const sql = `INSERT INTO people(nome) values('Maurilio')`
 
-let createPeople = `create table if not exists people(
-  id int primary key auto_increment,
-  nome varchar(255)
-)`;
-
-connection.query(createPeople, function(err, results, fields) {
-  if (err) {
-    console.log(err.message);
-  }else{
-    console.log('create table');
-  }
-});
-
 const pool = mysql.createPool({
   connectionLimit: 10,    
   password: 'root',
@@ -48,9 +35,6 @@ SelectAllElements = () =>{
 app.use(cors());
 app.get('/', async (req, res, next) => {
   try {
-    connection.query(sql)
-    connection.end
-
     const resultElements = await SelectAllElements();
     res.status(200).json({msg : '<h1>Full Cycle Rocks!</h1>', elements: resultElements});
   }catch(e) {
